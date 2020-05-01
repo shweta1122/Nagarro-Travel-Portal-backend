@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 
 @Data
@@ -19,57 +21,57 @@ import lombok.Data;
 @Table(name = "ticket")
 public class Ticket extends AuditModel {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-    @Column(length = 20)
-    String status;
+	@Column(length = 20)
+	String status;
 
-    @Column(length = 20)
-    String requestType;
+	@Column(length = 20)
+	String requestType;
 
-    @Column(length = 20)
-    String priority;
+	@Column(length = 20)
+	String priority;
 
-    @Column(length = 20)
-    String travelCity;
+	@Column(length = 20)
+	String travelCity;
 
-    @Column(length = 20)
-    String fromLocation;
+	@Column(length = 20)
+	String fromLocation;
 
-    @Column
-    Date travelDate;
+	@Column
+	Date travelDate;
 
-    @Column
-    Date endDate;
+	@Column
+	Date endDate;
 
-    @Column
-    String passportNumber;
+	@Column
+	String passportNumber;
 
-    @Column
-    String projectName;
+	@Column
+	String projectName;
 
-    @Column
-    String expenseBornBy;
+	@Column
+	String expenseBornBy;
 
-    @Column
-    String travelApprover;
+	@Column
+	String travelApprover;
 
-    @Column
-    String expectedDuration;
+	@Column
+	String expectedDuration;
 
-    @Column
-    String upperBound;
+	@Column
+	String upperBound;
 
-    @Column
-    String additionalDetail;
+	@Column
+	String additionalDetail;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "employee_id")
+	private Employee employee;
 
 	public long getId() {
 		return id;
@@ -202,6 +204,5 @@ public class Ticket extends AuditModel {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 
 }
