@@ -58,12 +58,11 @@ public class EmployeeService {
 	}
 
 	// update password and send mail
-	public Employee updatePassword(String username, @Valid Employee employee) {
-		employeeRepository.findByUserName(username);
-		employee.setPassword(passwordAuth.passwordGen());
-		mailService.sendEmail(employee);
-		return employeeRepository.save(employee);
-	}
+	public void updatePassword(@Valid Employee employee) {
+        employee.setPassword(passwordAuth.passwordGen());
+        employeeRepository.updatePassword(employee.getUserName(), employee.getPassword());
+        mailService.sendEmail(employee);
+    }
 
 
 }

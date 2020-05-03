@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,7 +30,6 @@ public class EmployeeController {
 	EmployeeService employeeService;
 	@Autowired
 	PasswordAuth passwordAuth;
-    
 
 	@GetMapping("/employee")
 	public List<Employee> getAllEmployee() {
@@ -43,21 +43,14 @@ public class EmployeeController {
 		return employeeService.createEmployee(employee);
 	}
 
-	@GetMapping("/employee/{id}")
-	public Employee getEmployeeById(@PathVariable(value = "id") Long Id) {
-		return employeeService.getEmployeeById(Id);
+	@PatchMapping("/forgot")
+	public void forgotPassword(@Valid @RequestBody Employee employee) {
+		employeeService.updatePassword(employee);
 	}
 
-	@PutMapping("/forgot/{password}")
-	public Employee forgotPassword(@PathVariable(value = "userName") String username, @Valid @RequestBody Employee employee) {
-		return employeeService.updatePassword(username, employee);
-
+	@GetMapping("/")
+	public String welcome() {
+		return "Welcome to javatechie !!";
 	}
 
-    @GetMapping("/")
-    public String welcome() {
-        return "Welcome to javatechie !!";
-    }
-
-   
 }
