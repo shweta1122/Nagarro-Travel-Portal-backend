@@ -13,39 +13,41 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.util.pattern.PathPattern;
 
 @Configuration
-public class CorsConfig implements Filter {
+@EnableWebMvc
+public class CorsConfig { // implements Filter {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/*").allowedHeaders("*").allowedOrigins("HEAD", "GET", "PUT", "POST", "DELETE",
-                        "PATCH");
-
-                registry.addMapping("/employee/*").allowedHeaders("*").allowedOrigins("HEAD", "GET", "PUT", "POST",
-                        "DELETE", "PATCH");
+                registry.addMapping("/**");
 
             }
         };
     }
+}
 
-    @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-            throws IOException, ServletException {
+// @Override
+// public void doFilter(ServletRequest req, ServletResponse res, FilterChain
+// chain)
+// throws IOException, ServletException {
 
-                HttpServletRequest request = (HttpServletRequest) req;
-                HttpServletResponse response = (HttpServletResponse) res;
-            
-                response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-                response.setHeader("Access-Control-Allow-Credentials", "true");
-                response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-                response.setHeader("Access-Control-Max-Age", "3600");
-                response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
-            
-                chain.doFilter(req, res);
-            }
-    }
+// HttpServletRequest request = (HttpServletRequest) req;
+// HttpServletResponse response = (HttpServletResponse) res;
+
+// response.setHeader("Access-Control-Allow-Origin",
+// request.getHeader("Origin"));
+// response.setHeader("Access-Control-Allow-Credentials", "true");
+// response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS,
+// DELETE");
+// response.setHeader("Access-Control-Max-Age", "3600");
+// response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept,
+// X-Requested-With, remember-me");
+
+// chain.doFilter(req, res);
+// }
+// }}
