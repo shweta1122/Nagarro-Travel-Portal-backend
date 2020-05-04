@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class TicketController {
 
@@ -34,15 +35,15 @@ public class TicketController {
 
 	@PostMapping("/employee/{employeeId}/tickets")
 	public Ticket createTicket(@PathVariable(value = "employeeId") Long employeeId, @Valid @RequestBody Ticket ticket) {
-		return ticketServices.createTicket(employeeId,ticket);
+		return ticketServices.createTicket(employeeId, ticket);
 	}
 
 	@PutMapping("/tickets/{employeeId}/tickets/{ticketID}")
 	public Ticket updateTicket(@PathVariable(value = "employeeId") Long employeeId,
-			@PathVariable(value = "ticketID") Long ticketId, @RequestBody Ticket ticketRequest){
-//		if (!employeeRepository.existsById(employeeId)) {
-//			new ResourceNotFoundException("Employee", "id", employeeId);
-//		}
-		return ticketServices.updateTicket(employeeId,ticketId,ticketRequest);
+			@PathVariable(value = "ticketID") Long ticketId, @RequestBody Ticket ticketRequest) {
+		// if (!employeeRepository.existsById(employeeId)) {
+		// new ResourceNotFoundException("Employee", "id", employeeId);
+		// }
+		return ticketServices.updateTicket(employeeId, ticketId, ticketRequest);
 	}
 }
