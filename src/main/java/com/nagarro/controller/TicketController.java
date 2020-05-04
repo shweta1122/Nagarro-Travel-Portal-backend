@@ -35,6 +35,8 @@ public class TicketController {
 
 	@PostMapping("/employee/{employeeId}/tickets")
 	public Ticket createTicket(@PathVariable(value = "employeeId") Long employeeId, @Valid @RequestBody Ticket ticket) {
+		System.out.println("*************************************************************************************");
+		System.out.println(ticket);
 		return ticketServices.createTicket(employeeId, ticket);
 	}
 

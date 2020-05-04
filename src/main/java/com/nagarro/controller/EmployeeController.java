@@ -22,7 +22,7 @@ import com.nagarro.model.Employee;
 import com.nagarro.service.EmployeeService;
 import com.nagarro.service.PasswordAuth;
 
-@CrossOrigin(origins = "*")
+
 @RestController
 public class EmployeeController {
 

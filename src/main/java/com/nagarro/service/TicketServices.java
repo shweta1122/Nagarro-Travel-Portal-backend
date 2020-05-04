@@ -1,5 +1,8 @@
 package com.nagarro.service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -37,10 +40,18 @@ public class TicketServices {
 	
 	
 	public Ticket updateTicket(Long employeeId, Long ticketId, Ticket ticketRequest) {
+		System.out.println("-----------------------------------------------------------");
+		System.out.println(ticketRequest);
 		return ticketRepository.findById(ticketId).map(ticket -> {
+
+			LocalDate localDate = LocalDate.now();
+		ticket.setCreatedAt(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		
+		ticket.setUpdatedAt(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 			ticket.setProjectName(ticketRequest.getProjectName());
 			ticket.setRequestType(ticketRequest.getRequestType());
 			ticket.setPriority(ticketRequest.getPriority());
+
 			ticket.setTravelCity(ticketRequest.getTravelCity());
 			ticket.setFromLocation(ticketRequest.getFromLocation());
 			ticket.setTravelDate(ticketRequest.getTravelDate());
