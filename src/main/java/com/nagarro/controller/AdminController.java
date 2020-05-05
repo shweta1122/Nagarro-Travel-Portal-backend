@@ -3,13 +3,16 @@ package com.nagarro.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nagarro.jwt.util.JwtUtil;
 import com.nagarro.model.Admin;
@@ -59,6 +62,25 @@ public class AdminController {
 
 		return adminServices.updoadTicketDoc(adminId, employeeId, ticketId, ticketInfo);
 	}
+
+	// public ResponseEntity<?>  updloadTicketInfo(
+    //         @RequestParam("file") MultipartFile pdf,
+    //         @RequestParam("comments") String comments,
+    //         @RequestParam("ticketId") Long ticketId,
+	// 		@RequestParam("adminId") Long adminId,
+	// 		@RequestParam("employeeId") Long employeeId
+    //         ) {
+
+	// 			AdminTicket ticketInfo = new AdminTicket();
+
+	// 			ticketInfo.setAdminId(adminId);
+	// 			ticketInfo.setComments(comments);
+	// 			//ticketInfo.setPdf(pdf.getOriginalFilename());
+	// 			ticketInfo.setEmployeeId(employeeId);
+
+
+
+	// 		}
 
 	@PatchMapping("/admin/ticket/{ticketId}")
 	public Ticket updateTicketStatus(@PathVariable(value = "ticketId") Long ticketId,
