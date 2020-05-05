@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.nagarro.exception.ResourceNotFoundException;
 import com.nagarro.model.Admin;
+import com.nagarro.model.AuthRequest;
 import com.nagarro.model.Ticket;
 import com.nagarro.repository.AdminRepository;
 import com.nagarro.repository.TicketRepository;
@@ -21,6 +22,25 @@ public class AdminServices {
 	public List<Admin> getAdmin() {
 		return adminRepository.findAll();
 	}
+
+
+	public String authentiacate(AuthRequest auth) {
+		String userName = auth.getUserName();
+
+		Admin admin = adminRepository.findByuserName(userName);
+
+		if(admin==null) {
+			return "Invalid User";
+		}
+		else if(admin.getPassword().equals(auth.getPassword())) {
+			return "succesfull";
+		}
+		else{
+			return "Incorrect Password";
+		}
+	}
+
+
 
 	public Ticket updateTicketStatus(Long ticketId, Ticket ticketStatus) {
 
