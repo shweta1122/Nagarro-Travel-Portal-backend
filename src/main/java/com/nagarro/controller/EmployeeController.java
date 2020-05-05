@@ -48,8 +48,8 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/employee/{ticketId}/ticketDoc")
-	public AdminTicket getTicketDoc(@PathVariable(value = "ticketId") Long Id, @RequestBody AdminTicket ticketDetail) {
-		return employeeService.getTicketDoc(Id);
+	public AdminTicket getTicketDoc(@PathVariable(value = "ticketId") Long ticketId) {
+		return employeeService.getTicketDoc(ticketId);
 	}
 
 }

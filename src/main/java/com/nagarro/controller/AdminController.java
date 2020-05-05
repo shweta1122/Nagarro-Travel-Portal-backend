@@ -1,8 +1,11 @@
 package com.nagarro.controller;
 
+import java.io.IOException;
+import java.lang.StackWalker.Option;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,32 +60,24 @@ public class AdminController {
 
 	}
 
-	@PostMapping("/admin/{adminId}/{employeeId}/{ticketId}/uploadDoc")
-	public String updloadTicketInfo(@PathVariable(value = "adminId") Long adminId,
-			@PathVariable(value = "employeeId") Long employeeId, @PathVariable(value = "ticketId") Long ticketId,
-			@RequestBody AdminTicket ticketInfo) {
+	@RequestMapping(value = "/admin/{adminId}/uploadDoc",method ={RequestMethod.OPTIONS,RequestMethod.POST},consumes = MediaType.ALL_VALUE)
+	public String updloadTicketInfo(@RequestParam("file") MultipartFile file,
+			@RequestParam("comments") String comments, @RequestParam("ticketId") Long ticketId,
+			@RequestParam("adminId") Long adminId, @RequestParam("employeeId") Long employeeId) throws IOException {
 
-		return adminServices.updoadTicketDoc(adminId, employeeId, ticketId, ticketInfo);
-	}
+				AdminTicket ticketInfo = new AdminTicket();
 
-	// public ResponseEntity<?>  updloadTicketInfo(
-    //         @RequestParam("file") MultipartFile pdf,
-    //         @RequestParam("comments") String comments,
-    //         @RequestParam("ticketId") Long ticketId,
-	// 		@RequestParam("adminId") Long adminId,
-	// 		@RequestParam("employeeId") Long employeeId
-    //         ) {
+				ticketInfo.setAdminId(adminId);
+				ticketInfo.setComments(comments);
+				ticketInfo.setPdf(file.getBytes());
+				ticketInfo.setEmployeeId(employeeId);
+				ticketInfo.setTicketId(ticketId);
 
-	// 			AdminTicket ticketInfo = new AdminTicket();
-
-	// 			ticketInfo.setAdminId(adminId);
-	// 			ticketInfo.setComments(comments);
-	// 			//ticketInfo.setPdf(pdf.getOriginalFilename());
-	// 			ticketInfo.setEmployeeId(employeeId);
+				return adminServices.updoadTicketDoc(ticketInfo); 
 
 
 
-	// 		}
+			}
 
 	@PatchMapping("/admin/ticket/{ticketId}")
 	public Ticket updateTicketStatus(@PathVariable(value = "ticketId") Long ticketId,

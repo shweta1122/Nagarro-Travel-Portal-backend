@@ -1,6 +1,5 @@
 package com.nagarro.model;
 
-import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import javassist.bytecode.ByteArray;
 import lombok.Data;
 
 @Data
@@ -32,7 +32,7 @@ public class AdminTicket {
     private String comments;
 
     @Column
-    private Blob pdf;
+    private byte[] pdf;
 
 
     

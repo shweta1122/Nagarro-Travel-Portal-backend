@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -43,9 +44,11 @@ public class Ticket extends AuditModel {
 	String fromLocation;
 
 	@Column
+
 	Date travelDate;
 
 	@Column
+
 	Date endDate;
 
 	@Column

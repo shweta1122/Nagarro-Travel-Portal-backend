@@ -2,7 +2,7 @@ package com.nagarro.repository;
 
 import java.util.List;
 
-import com.nagarro.model.City;
+import com.nagarro.model.State;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface CityRepository extends JpaRepository<City, Integer> {
+public interface StateRepository  extends JpaRepository<State, Integer> {
 	
-	List<City> findByStateId(Integer stateId);
+	List<State> findByCountryId(Integer countryId);
 
 }

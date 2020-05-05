@@ -1,25 +1,60 @@
 package com.nagarro.model;
 
+
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Data;
-
-
-@Data
 @Entity
-@Table(name = "city")
+@Table(name="cities")
 public class City {
+	
+	@Id
+	@Column(name="id")
+	private int id;
+	
+	@Column(name="name")
+	private String name;
+	
+	@Column(name="state_id")
+	private int stateId;
+	
+	public City() {
+		
+	}
 
-    @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	public int getId() {
+		return id;
+	}
 
-	@Column(length = 50)
-	private String cities;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getStateId() {
+		return stateId;
+	}
+
+	public void setStateId(int state_id) {
+		this.stateId = state_id;
+	}
+
+	public City(int id, String name, int state_id) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.stateId = state_id;
+	}
+	
 
 }

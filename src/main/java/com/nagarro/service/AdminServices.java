@@ -25,12 +25,8 @@ public class AdminServices {
 	AdminTicketRepository adminTicketRepository;
 
 
-	public String updoadTicketDoc(Long adminId,Long employeeId,
-	Long ticketId, AdminTicket ticketInfo) {
+	public String updoadTicketDoc(AdminTicket ticketInfo) {
 
-		ticketInfo.setAdminId(adminId);
-		ticketInfo.setEmployeeId(employeeId);
-		ticketInfo.setTicketId(ticketId);
 		adminTicketRepository.save(ticketInfo);
 		return "Ok";
 
