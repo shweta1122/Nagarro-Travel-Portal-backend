@@ -13,14 +13,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nagarro.exception.ResourceNotFoundException;
+import com.nagarro.model.AdminTicket;
 import com.nagarro.model.Employee;
 import com.nagarro.model.Ticket;
+import com.nagarro.repository.AdminRepository;
+import com.nagarro.repository.AdminTicketRepository;
 import com.nagarro.repository.EmployeeRepository;
 
 @Service
 public class EmployeeService {
 	@Autowired
 	EmployeeRepository employeeRepository;
+
+	@Autowired 
+	AdminTicketRepository adminTicketRepository;
 	@Autowired
 	PasswordAuth passwordAuth;
 	@Autowired
@@ -62,7 +68,15 @@ public class EmployeeService {
         employee.setPassword(passwordAuth.passwordGen());
         employeeRepository.updatePassword(employee.getUserName(), employee.getPassword());
         mailService.sendEmail(employee);
-    }
+	}
+
+	public AdminTicket getTicketDoc(Long Id) {
+		return adminTicketRepository.findByTicketId(Id);
+
+	}
+	
+
+	
 
 
 }

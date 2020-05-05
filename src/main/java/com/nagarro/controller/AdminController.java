@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nagarro.jwt.util.JwtUtil;
 import com.nagarro.model.Admin;
+import com.nagarro.model.AdminTicket;
 import com.nagarro.model.AuthRequest;
 import com.nagarro.model.Employee;
 import com.nagarro.model.Ticket;
@@ -51,7 +52,15 @@ public class AdminController {
 
 	}
 
-	@PatchMapping("/admin/tickets/{ticketId}")
+	@PostMapping("/admin/{adminId}/{employeeId}/{ticketId}/uploadDoc")
+	public String updloadTicketInfo(@PathVariable(value = "adminId") Long adminId,
+			@PathVariable(value = "employeeId") Long employeeId, @PathVariable(value = "ticketId") Long ticketId,
+			@RequestBody AdminTicket ticketInfo) {
+
+		return adminServices.updoadTicketDoc(adminId, employeeId, ticketId, ticketInfo);
+	}
+
+	@PatchMapping("/admin/ticket/{ticketId}")
 	public Ticket updateTicketStatus(@PathVariable(value = "ticketId") Long ticketId,
 			@RequestBody Ticket ticketStatus) {
 		return adminServices.updateTicketStatus(ticketId, ticketStatus);

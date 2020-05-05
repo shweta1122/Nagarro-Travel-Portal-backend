@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nagarro.jwt.util.JwtUtil;
+import com.nagarro.model.AdminTicket;
 import com.nagarro.model.AuthRequest;
 import com.nagarro.model.Employee;
 import com.nagarro.service.EmployeeService;
 import com.nagarro.service.PasswordAuth;
-
 
 @RestController
 public class EmployeeController {
@@ -38,8 +38,7 @@ public class EmployeeController {
 
 	@PostMapping("/employee")
 	public Employee registerEmployee(@Valid @RequestBody Employee employee) {
-		System.out.println("------------------------------------");
-		System.out.println(employee);
+
 		return employeeService.createEmployee(employee);
 	}
 
@@ -48,9 +47,9 @@ public class EmployeeController {
 		employeeService.updatePassword(employee);
 	}
 
-	@GetMapping("/")
-	public String welcome() {
-		return "Welcome to javatechie !!";
+	@GetMapping("/employee/{ticketId}/ticketDoc")
+	public AdminTicket getTicketDoc(@PathVariable(value = "ticketId") Long Id, @RequestBody AdminTicket ticketDetail) {
+		return employeeService.getTicketDoc(Id);
 	}
 
 }
