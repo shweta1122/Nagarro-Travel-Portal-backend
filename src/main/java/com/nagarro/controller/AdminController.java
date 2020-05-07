@@ -1,13 +1,13 @@
 package com.nagarro.controller;
 
 import java.io.IOException;
-import java.lang.StackWalker.Option;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.nagarro.jwt.util.JwtUtil;
 import com.nagarro.model.Admin;
 import com.nagarro.model.AdminTicket;
 import com.nagarro.model.AuthRequest;
-import com.nagarro.model.Employee;
+
 import com.nagarro.model.Ticket;
-import com.nagarro.repository.EmployeeRepository;
+import com.nagarro.repository.AdminTicketRepository;
+
 import com.nagarro.repository.TicketRepository;
 import com.nagarro.service.AdminServices;
 
@@ -38,8 +38,12 @@ public class AdminController {
 	@Autowired
 	TicketRepository ticketRepository;
 
+	@Autowired
+	AdminTicketRepository commentsService;
+
 	@PostMapping(value = "/admin/login")
 	public String login(@RequestBody AuthRequest auth) {
+
 		return adminServices.authentiacate(auth);
 
 	}
@@ -60,24 +64,32 @@ public class AdminController {
 
 	}
 
-	@RequestMapping(value = "/admin/{adminId}/uploadDoc",method ={RequestMethod.OPTIONS,RequestMethod.POST},consumes = MediaType.ALL_VALUE)
-	public String updloadTicketInfo(@RequestParam("file") MultipartFile file,
-			@RequestParam("comments") String comments, @RequestParam("ticketId") Long ticketId,
-			@RequestParam("adminId") Long adminId, @RequestParam("employeeId") Long employeeId) throws IOException {
+	@RequestMapping(value = "/admin/uploadDoc", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
+	public ResponseEntity<?> addComment(@RequestParam("file") MultipartFile file,
+			@RequestParam("comments") String comments, @RequestParam("ticketId") Long tid,
+			@RequestParam("adminId") Long aid) {
 
-				AdminTicket ticketInfo = new AdminTicket();
+		AdminTicket ob = new AdminTicket();
 
-				ticketInfo.setAdminId(adminId);
-				ticketInfo.setComments(comments);
-				ticketInfo.setPdf(file.getBytes());
-				ticketInfo.setEmployeeId(employeeId);
-				ticketInfo.setTicketId(ticketId);
+		ob.setComments(comments);
+		ob.setTicketId(tid);
+		ob.setFileName(file.getOriginalFilename());
+		ob.setAdminId(aid);
 
-				return adminServices.updoadTicketDoc(ticketInfo); 
+		try {
+			ob.setFile(file.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
+		commentsService.save(ob);
 
+		if (file != null) {
 
-			}
+		}
+
+		return ResponseEntity.ok().body("Updated");
+	}
 
 	@PatchMapping("/admin/ticket/{ticketId}")
 	public Ticket updateTicketStatus(@PathVariable(value = "ticketId") Long ticketId,
